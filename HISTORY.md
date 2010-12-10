@@ -1,13 +1,17 @@
 A Brief History of Yeti
 =======================
 
-0.1.3 / development master
---------------------------
+0.1.3 / 2010-12-08
+------------------
 
   * Require `--server` to start the server.
   * Add usage statement.
-  * Fix fatal error under Cygwin. (#9)
+  * Windows support: Fix fatal error under Cygwin. (#9)
   * Changed: Options must be "--port=8000" instead of "--port 8000".
+  * Upgrade Express to 1.0.0.
+  * Upgrade Connect to 0.5.0.
+  * Upgrade Jade to 0.5.7.
+  * Upgrade Optimist to 0.1.1.
 
 0.1.2 / 2010-11-10
 ------------------

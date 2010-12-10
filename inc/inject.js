@@ -48,7 +48,10 @@ function $yetify (config) {
     var href = w.location.href,
         YETI = parent.YETI || NullYeti;
 
-    YETI.heartbeat();
+    // YETI may be undefined if we're running
+    // outside of server mode
+
+    if (YETI) YETI.heartbeat();
 
     function fixIE9 (v) {
         // TestReporter does UA sniffing
@@ -268,9 +271,12 @@ function $yetify (config) {
         }
 
         Runner.subscribe(Runner.COMPLETE_EVENT, submit);
-        Runner.subscribe(Runner.TEST_PASS_EVENT, YETI.heartbeat);
-        Runner.subscribe(Runner.TEST_FAIL_EVENT, YETI.heartbeat);
-        Runner.subscribe(Runner.TEST_IGNORE_EVENT, YETI.heartbeat);
+
+        if (YETI) {
+            Runner.subscribe(Runner.TEST_PASS_EVENT, YETI.heartbeat);
+            Runner.subscribe(Runner.TEST_FAIL_EVENT, YETI.heartbeat);
+            Runner.subscribe(Runner.TEST_IGNORE_EVENT, YETI.heartbeat);
+        }
 
     }
 

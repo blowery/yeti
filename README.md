@@ -33,7 +33,7 @@ Server mode!
 
 You can also run Yeti as a server:
 
-    $ yeti
+    $ yeti --server
     Yeti will only serve files inside /Users/reid
     Visit http://localhost:8000, then run:
         yeti <test document>
@@ -68,8 +68,6 @@ You can pass the `--port` option to override port 8000 with your preferred serve
 
 Yeti doesn't exit automatically when used with server mode. If you're using only 1 browser with server mode (i.e. just running tests on 1 browser on another computer or VM), you may use the `--solo 1` option to have Yeti exit with a summary after all tests run once. This is also handy for scripting Yeti: if a failure occurs, Yeti will exit with a non-zero status code.
 
-Please note that Yeti keeps running until you exit with Ctrl-C, even after all tests results have arrived. (This will be fixed in a future release.)
-
 Special tests
 -------------
 
@@ -102,41 +100,38 @@ You can then visit that URL on your mobile (or any other) device and have it run
 Caveats
 -------
 
-Yeti is currently only tested on Mac OS X. However, you can run tests on any platform: just run Yeti in server mode and point the browser on another OS to your Yeti server. Yeti should work on other platforms as well, especially in server mode. Feel free to submit patches: see the Contribute section below.
+Yeti is known to work on:
+
+ - Mac OS X
+ - Windows in server mode, see [Yeti on Windows][win]
+ - RHEL 5 in server mode
+
+Yeti should work on other platforms as well, especially in server mode. Feel free to submit patches: see the Contribute section below.
+
+You can run tests on any platform: just run Yeti in server mode and point the browser on another OS to your Yeti server.
+
+Yeti keeps running until you exit with Ctrl-C, even after all test results have arrived. (This will be fixed in a future release.)
 
 You must start Yeti in server mode in the directory you'll be serving tests from. For security reasons, Yeti will reject requests that try to access files outside of the directory you start Yeti in.
 
 Installation
 ------------
 
-This is experimental software. Use at your own risk. For now, we've only tested the installation process on Mac OS X.
-
-### Recommended Install
+This is experimental software. Use at your own risk.
 
 If you have [npm][] installed, this will be easy.
 
-    $ npm install yeti@stable
+    $ npm install yeti
+
+Otherwise, install [npm][] first.
 
 If you want to run off the latest code, clone this project and then run make.
 
     $ git clone git://github.com/reid/yeti.git && cd yeti && make
 
-This will install [homebrew][], [node][] and [npm][] for you if you don't have them installed already.
-
 Installing [localtunnel][] helps proxy Yeti outside of your firewall. It's available as a Ruby gem:
 
     $ gem install localtunnel
-
-### Native Mac Install
-
-A fancy native installer is available if you're using a modern Mac. You will need:
-
-* Mac OS X 10.6 or later
-* An Intel Core 2 processor or better
-
-Check out [GitHub Downloads on reid/yeti][dl] for the installer.
-
-The native installer is limited to modern configurations because it ships with all dependencies pre-built. If you have a different configuration, please install with the recommended install method.
 
 Bugs & Feedback
 ---------------
@@ -150,7 +145,7 @@ Testing
 
 Yeti uses [Vows][] for testing its built-in server. After installing Vows, you may run the `vows` command to run all suites. See the [Vows website][Vows] for information on installing and running Vows.
 
-The server test suite requires [YUI 3][yui3] and [YUI 2][yui2] to be installed into tests/vendor to test its integration with YUI Test. Symlink yui2 and yui3 repo directories from elsewhere or place the library downloads here.
+The server test suite requires [YUI 3][yui3] and [YUI 2][yui2] to be installed into tests/vendor to test its integration with YUI Test. Symlink yui2 and yui3 repo directories from elsewhere or place the library downloads there.
 
 License
 -------
@@ -169,7 +164,7 @@ Your contributions are welcome! Please review the [YUI contributor guide][CLA] b
   [homebrew]: http://github.com/mxcl/homebrew
   [node]: http://nodejs.org/
   [npm]: http://npmjs.org/
-  [dl]: http://github.com/reid/yeti/downloads
+  [win]: https://github.com/reid/yeti/wiki/Yeti-on-Windows
   [issues]: http://yuilibrary.com/projects/yeti/newticket
   [YUI Labs]: http://yuilibrary.com/labs/
   [Vows]: http://vowsjs.org/
