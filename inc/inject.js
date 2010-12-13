@@ -215,6 +215,9 @@ function $yetify (config) {
             dojo.connect(doh, "_onEnd", this, "_dohComplete");
             dojo.connect(doh, "_testFinished", this, "_dohTestFinished");
             
+            this._results = {};
+            
+            
             if(doh._testCount > 0) {
                 // tests already ran
                 this._root = {
@@ -247,19 +250,50 @@ function $yetify (config) {
             },
             
             _dohComplete: function() {
-                this.onComplete({
-                    results: {
+                
+                var results = dojo.mixin(
+                    this._results,
+                    {
                         name: href,
                         total: doh._testCount,
                         passed: doh._testCount - (doh._errorCount + doh._failureCount),
                         failed: doh._errorCount + doh._failureCount
-                    }
-                });
+                    });
+                
+                this.onComplete({ results: this._results });
             },
             
             _dohTestFinished: function(group, fixture, success) {
                 if(success) this.onTestPass();
                 else this.onTestFail();
+                
+                debugger;
+                
+                var rg = this._results[group];
+                if(!rg) {
+                    this._results[group] = rg = {
+                        name: group,
+                        type: "testcase",
+                        total: 0,
+                        ignored: 0,
+                        failed: 0,
+                        passed: 0
+                    };
+                }
+                
+                var rt = rg[fixture.name];
+                if(!rt) {
+                    rg[fixture.name] = rt = {
+                        name: fixture.name,
+                        type: "test",
+                        result: success ? "pass" : "fail",
+                        message: "Test " + (success ? "pass" : "fail")
+                    };
+                }
+                
+                rg[success ? "passed" : "failed"] += 1;
+                rg.total += 1;          
+                
             }
         };
         
